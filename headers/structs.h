@@ -16,21 +16,11 @@
 
 #define SIZE_TABLE 128
 
-enum ID {
-    LEX_ERROR = 256,
-    ID,
-    DLM,
-    OP,
-    EQ,
-    COMM,
-    NUM
-};
-
 typedef size_t (*hash_func)(char*);
 
 struct element {
     int8_t used;
-    enum ID id;
+    int id;
     char *tok;
     struct element *next;
 };
@@ -45,8 +35,10 @@ struct id_table {
 
 typedef struct id_table idt_t;
 
-#define PRINT(TOK) printf(#TOK "(%d) \"%s\"(%d) in [%d, %d]\n", TOK, yytext, yyleng, yylineno, ++col)
-#define ADD_T(TOK) if (add_token(table, yytext, TOK)) { fprintf(stderr, "cannot add tok %s\n", yytext); } /* return TOK */
 
+#define PRINT(TOK) /*printf(#TOK "(%d) \"%s\"(%d) in [%d, %d]\n", TOK, yytext, yyleng, yylineno, ++col)*/
+#define ADD_T(TOK) if (add_token(table, yytext, TOK)) { fprintf(stderr, "cannot add tok %s\n", yytext);} yylval = atoi(yytext); \
+                return TOK
+#define YYPRINT(file, type, value) fprintf(file, "{%d}", value);
 
 #endif //LEXER_STRUCTS_H

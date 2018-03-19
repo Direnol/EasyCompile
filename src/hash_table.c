@@ -53,7 +53,7 @@ size_t std_hash(char *str)
     return hash;
 }
 
-int add_token(idt_t *table, char *tok, enum ID id)
+int add_token(idt_t *table, char *tok, int id)
 {
     size_t h = table->hash(tok) % table->size;
     struct element *arr = table->table;
@@ -61,7 +61,7 @@ int add_token(idt_t *table, char *tok, enum ID id)
         arr[h].used = USE;
         arr[h].tok = strdup(tok);
         arr[h].id = id;
-//        printf("[%zu, {%s}, {%s}]\n", h, tok, __strtok(id));
+//        printf("[%zu, {%s}, {%s}]\n", h, tok, toktostr(id));
         return EXIT_SUCCESS;
     }
     if (strcmp(tok, arr[h].tok) == 0)
@@ -75,7 +75,7 @@ int add_token(idt_t *table, char *tok, enum ID id)
 
 }
 
-enum ID __get_collision(struct element *list, char *tok)
+int __get_collision(struct element *list, char *tok)
 {
     if (list == NULL) return LEX_ERROR;
     if (strcmp(tok, list->tok) == 0) return list->id;
@@ -83,7 +83,7 @@ enum ID __get_collision(struct element *list, char *tok)
     return LEX_ERROR;
 }
 
-enum ID get_token(idt_t *table, char *tok)
+int get_token(idt_t *table, char *tok)
 {
     size_t h = table->hash(tok) % table->size;
     struct element *arr = table->table;
@@ -92,7 +92,7 @@ enum ID get_token(idt_t *table, char *tok)
     return __get_collision(arr[h].next, tok);
 }
 
-int __add_collisioin(struct element *list, char *tok, enum ID id)
+int __add_collisioin(struct element *list, char *tok, int id)
 {
     if (list->used == USE) {
         if (strcmp(tok, list->tok) == 0) return EXIT_SUCCESS;
@@ -112,8 +112,6 @@ int __add_collisioin(struct element *list, char *tok, enum ID id)
 void set_err(idt_t *table, char str)
 {
     table->err = 1;
-    char error_buff[2] = {str, '\0'};
-    add_token(table, error_buff, LEX_ERROR);
 }
 int has_err(idt_t *t)
 {
@@ -126,7 +124,7 @@ void statistic_table(idt_t *table)
     struct element *arr = table->table;
     for (size_t i = 0; i < table->size; ++i) {
         if (arr[i].used == USE) {
-            printf("(%s, %s)\n", __strtok(arr[i].id), arr[i].tok);
+            printf("(%s, %s)\n", toktostr(arr[i].id), arr[i].tok);
             if (arr[i].next) {
                 __statistic_collision(arr[i].next);
             }
@@ -137,25 +135,31 @@ void statistic_table(idt_t *table)
 
 void __statistic_collision(struct element *list)
 {
-    printf("(%s, %s)\n", __strtok(list->id), list->tok);
+    printf("(%s, %s)\n", toktostr(list->id), list->tok);
     if (list->next) __statistic_collision(list->next);
 }
 
-char *__strtok(enum ID id)
+char *toktostr(int id)
 {
 #define TOSTR(S) strcpy(buf, #S); break
     static char buf[16];
     switch (id) {
-        case NUM:
-            TOSTR(NUM);
-        case DLM:
-            TOSTR(DLM);
-        case EQ:
-            TOSTR(EQ);
-        case OP:
-            TOSTR(OP);
+        case INT:
+            TOSTR(INT);
+        case DOUBLE:
+            TOSTR(DOUBLE);
+        case FOR:
+            TOSTR(FOR);
+        case ELSE:
+            TOSTR(ELSE);
         case ID:
             TOSTR(ID);
+        case IF:
+            TOSTR(IF);
+        case  PRINT:
+            TOSTR(PRINT);
+        case SCAN:
+            TOSTR(SCAN);
         default:
             TOSTR(LEX_ERROR);
     }

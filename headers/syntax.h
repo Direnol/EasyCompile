@@ -40,6 +40,23 @@
 extern int yydebug;
 #endif
 
+/* Token type.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    INT = 258,
+    DOUBLE = 259,
+    ID = 260,
+    IF = 261,
+    ELSE = 262,
+    PRINT = 263,
+    SCAN = 264,
+    FOR = 265,
+    LEX_ERROR = 266,
+    TYPE = 267
+  };
+#endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
