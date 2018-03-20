@@ -1,7 +1,7 @@
 %option yylineno
 
 %{
-#include "../headers/hash_table.h"
+#include "../headers/Ast.h"
 idt_t *table = NULL;
 
   unsigned int col = 0;
@@ -21,6 +21,11 @@ SIGN [+-]
 
 "//"(.|[ \t])*\n {
     PRINT(COMM);
+}
+
+return {
+    PRINT(RETURN);
+    return RETURN;
 }
 
 if {
@@ -67,7 +72,7 @@ int|char|double {
 
 
 
-{SIGN}{NUM}+ {
+{SIGN}?{NUM}+ {
     PRINT(INT);
     ADD_T(INT);
     //yyval
