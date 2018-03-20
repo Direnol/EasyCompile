@@ -36,9 +36,8 @@ struct id_table {
 typedef struct id_table idt_t;
 
 
-#define PRINT(TOK) /*printf(#TOK "(%d) \"%s\"(%d) in [%d, %d]\n", TOK, yytext, yyleng, yylineno, ++col)*/
-#define ADD_T(TOK) if (add_token(table, yytext, TOK)) { fprintf(stderr, "cannot add tok %s\n", yytext);} yylval = atoi(yytext); \
-                return TOK
+#define PRINT(TOK) printf(#TOK "(%d) \"%s\"(%d) in [%d, %d]\n", TOK, yytext, yyleng, yylineno, ++col)
+#define ADD_T(TOK) if (add_token(table, yytext, TOK)) { fprintf(stderr, "cannot add tok %s\n", yytext);}
 #define YYPRINT(file, type, value) fprintf(file, "{%d}", value);
 
 #endif //LEXER_STRUCTS_H

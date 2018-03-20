@@ -50,12 +50,15 @@ for {
 
 int|char|double {
     PRINT(TYPE);
+    //yyval
     return TYPE;
 }
 
 {ID} {
     PRINT(ID);
     ADD_T(ID);
+    //yyval
+    return ID;
 }
 
 {ws} {
@@ -63,9 +66,12 @@ int|char|double {
 }
 
 
+
 {SIGN}{NUM}+ {
     PRINT(INT);
     ADD_T(INT);
+    //yyval
+    return INT;
 }
 
 {SIGN}?({NUM}+\.{NUM}+|{NUM}+\.|{NUM}+)([eE][+-]?{NUM}+)? {
