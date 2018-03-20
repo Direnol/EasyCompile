@@ -62,14 +62,15 @@ int|char|double {
     col = *yytext == '\n' ? 0 : col + 1;
 }
 
-{SIGN}?({NUM}+\.{NUM}+|{NUM}+\.|{NUM}+)([eE][+-]?{NUM}+)? {
-PRINT(DOUBLE);
-ADD_T(DOUBLE);
-}
 
-{NUM}+ {
+{SIGN}{NUM}+ {
     PRINT(INT);
     ADD_T(INT);
+}
+
+{SIGN}?({NUM}+\.{NUM}+|{NUM}+\.|{NUM}+)([eE][+-]?{NUM}+)? {
+    PRINT(DOUBLE);
+    ADD_T(DOUBLE);
 }
 
 {DLM} {
