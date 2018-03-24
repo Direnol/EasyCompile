@@ -12,7 +12,7 @@ ID ({CHAR}|_)({CHAR}|{NUM})*
 ws [ \t\n]
 OP [-+*/<>?!%=~]
 DLM [();{},]
-SIGN [+-]
+SIGN [-+]
 
 %%
 "/*".*"*/" {
@@ -23,46 +23,58 @@ SIGN [+-]
     PRINT(COMM);
 }
 
-return {
+"return" {
     PRINT(RETURN);
     return RETURN;
 }
 
-if {
+"if" {
     PRINT(IF);
     return IF;
 }
 
-else {
+"else" {
     PRINT(ELSE);
     return ELSE;
 }
 
-print {
+"print" {
     PRINT(PRINT);
     return PRINT;
 }
 
-scan {
+"scan" {
     PRINT(SCAN);
     return SCAN;
 }
 
-for {
+"for" {
     PRINT(FOR);
     return FOR;
 }
 
-int|char|double {
+"int" {
     PRINT(TYPE);
-    //yyval
-    return TYPE;
+    yylval.type = INT;
+    return INT;
+}
+
+"char" {
+    PRINT(TYPE);
+    yylval.type = CHAR;
+    return CHAR;
+}
+
+"double" {
+    PRINT(TYPE);
+    yylval.type = DOUBLE;
+    return DOUBLE;
 }
 
 {ID} {
     PRINT(ID);
     ADD_T(ID);
-    //yyval
+    // yylval.str = strdup(yytext);
     return ID;
 }
 
@@ -70,18 +82,18 @@ int|char|double {
     col = *yytext == '\n' ? 0 : col + 1;
 }
 
-
-
 {SIGN}?{NUM}+ {
-    PRINT(INT);
-    ADD_T(INT);
-    //yyval
-    return INT;
+    PRINT(CONST_INT);
+    ADD_T(CONST_INT);
+    // yylval.str = strdup(yytext);
+    return CONST_INT;
 }
 
 {SIGN}?({NUM}+\.{NUM}+|{NUM}+\.|{NUM}+)([eE][+-]?{NUM}+)? {
-    PRINT(DOUBLE);
-    ADD_T(DOUBLE);
+    PRINT(CONST_DOUBLE);
+    // yylval.str = strdup(yytext);
+    ADD_T(CONST_DOUBLE);
+    return CONST_DOUBLE;
 }
 
 {DLM} {

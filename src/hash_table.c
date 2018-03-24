@@ -160,6 +160,10 @@ char *toktostr(int id)
             TOSTR(PRINT);
         case SCAN:
             TOSTR(SCAN);
+        case CONST_DOUBLE:
+            TOSTR(CONST_DOUBLE);
+        case CONST_INT:
+            TOSTR(CONST_INT);
         default:
             TOSTR(LEX_ERROR);
     }

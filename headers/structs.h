@@ -36,7 +36,7 @@ struct id_table {
 typedef struct id_table idt_t;
 
 
-#define PRINT(TOK) printf(#TOK " \"%s\"(%d) in [%d, %d]\n", yytext, yyleng, yylineno, ++col)
+#define PRINT(TOK) /*printf(#TOK " \"%s\"(%d) in [%d, %d]\n", yytext, yyleng, yylineno, ++col)*/
 #define ADD_T(TOK) if (add_token(table, yytext, TOK)) { fprintf(stderr, "cannot add tok %s\n", yytext);}
 #define YYPRINT(file, type, value) fprintf(file, "{%d}", value);
 
