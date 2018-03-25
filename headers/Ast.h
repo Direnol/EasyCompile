@@ -15,6 +15,8 @@ typedef enum {
     typeFunc,
     typeTerm,
     typeBody,
+    typeRet,
+    typeIvar,
     typeErr
 } nodeEnum;
 
@@ -44,10 +46,10 @@ struct _if {
 /*node of body
  * contains list of other nodes same as if, defvar, for */
 struct _body {
-    Ast_t *batom; // defvar, expr, if/else, return
+    Ast_t *val; // defvar, expr, if/else, return
     Ast_t *next;
 };
-
+typedef struct _body _body_t;
 
 struct _func {
     Ast_t *name;
@@ -63,13 +65,16 @@ struct _term {
     char *id;
 };
 typedef struct _term _term_t;
+
 /* node of define variable
  * contains term thath describe variable
  * and maybe node of init expr */
 struct _defvar {
-    Ast_t *term;
+    int type;
+    char *key;
     Ast_t *expr;
 };
+typedef struct _defvar _defvar_t;
 
 /* tree of some operation; other name is expr */
 struct _operation {
@@ -116,7 +121,7 @@ struct Ast {
 };
 
 
-Ast_t *ast_init(int type);
+Ast_t *ast_init(nodeEnum type);
 
 Ast_t *ast_node(attr_t attr, nodeEnum type);
 
@@ -125,5 +130,7 @@ void ast_dfs(struct Ast *root);
 Ast_t *ast_push(Ast_t *parent, Ast_t *child);
 
 void ast_free(Ast_t *node);
+
+char *_get_type(int type);
 
 #endif //LEXER_AST_H

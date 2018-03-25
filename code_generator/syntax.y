@@ -25,32 +25,34 @@ attr_t attr;
 %type <str> ID CONST_INT CONST_DOUBLE
 %type <tree> IF ELSE PRINT SCAN FOR RETURN
 %type <tree> START ATOM DEFVAR INITVAR FUNC ARGS BODY EVALUATE EXPR TERM
-%type <tree> CONST_VAR
+%type <tree> CONST_VAR FUNC_NAME
 
 %%
 
-START:  ATOM { /*ast_push(root, $1);*/ printf("[PROGRAM]\n");}
+START:  ATOM { ast_push(root, $1); printf("[PROGRAM]\n");}
         | ATOM START { /*ast_push(root, $1);*/ }
 
-ATOM:   FUNC { /*$$ = $1;*/  printf("[FUNC]\n");}
+ATOM:   FUNC { $$ = $1;  printf("[FUNC]\n");}
         | DEFVAR { /*$$ = $1;*/ printf("[DEFVAR]\n"); }
 
-DEFVAR: TYPE ID ';' { /*$$ = ast_node(attr.defCONST_VAR = {$1, $2, NULL}, DEFVAR);*/ }
 
-INITVAR:    DEFVAR '=' EVALUATE ';' { /*$$ = ast_node({$1, $2, $4}, DEFVAR); */ }
-            | ID '=' EVALUATE ';' { /*$$ = ast_node({}, INITVAR});*/ }
+DEFVAR: TYPE ID ';' { attr.defvar = (_defvar_t) {$1, $2, NULL}; $$ = ast_node(attr, typeDef); }
 
-FUNC:   DEFVAR '(' ARGS ')' '{' BODY '}' { attr.func = (_func_t) {$1, $3, $6}; /*$$ = ast_node(attr typeFunc);*/ }
+FUNC_NAME: TYPE ID { attr.defvar = (_defvar_t) {$1, $2, NULL}; $$ = ast_node(attr, typeDef); }
 
-ARGS:   DEFVAR { attr.args = (_args_t) {$1, NULL}; $$ = ast_node(attr, typeArgs); }
-        | DEFVAR ',' ARGS { attr.args = (_args_t) {$1, $3}; $$ = ast_node(attr, typeArgs); }
-        | {  attr.args = ((_args_t) {NULL, NULL});  $$ = ast_node(attr, typeArgs);  }
+INITVAR:    TYPE ID '=' EVALUATE ';' { attr.defvar = (_defvar_t) {$1, $2, $4}; $$ = ast_node(attr, typeDef); }
+        | ID '=' EVALUATE ';' { attr.defvar = (_defvar_t) {-1, $1, $3}; $$ = ast_node(attr, typeIvar); }
 
-BODY:   DEFVAR BODY { }
-        | INITVAR BODY { }
-        | RETURN EVALUATE ';' { printf("[BODY]\n");}
+FUNC:   FUNC_NAME '(' ARGS ')' '{' BODY '}' { attr.func = (_func_t) {$1, $3, $6}; $$ = ast_node(attr, typeFunc); }
 
-EVALUATE:   EXPR { /*$$ = $1*/printf("[EVAL]\n"); }
+ARGS:   FUNC_NAME { attr.args = (_args_t) {$1, NULL}; $$ = ast_node(attr, typeArgs); puts("[ARGS]"); }
+        | FUNC_NAME ',' ARGS { attr.args = (_args_t) {$1, $3}; $$ = ast_node(attr, typeArgs); }
+
+BODY:   DEFVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
+        | INITVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
+        | RETURN EVALUATE ';' { attr.body = (_body_t) {$2, NULL}; $$ = ast_node(attr, typeRet);}
+
+EVALUATE:   EXPR { $$ = $1; printf("[EVAL]\n"); }
 
 EXPR:   TERM { $$ = $1; printf("[EXPR]\n"); }
         | EXPR '+' TERM { attr.oper = (_oper_t) {'+', $1, $3}; $$ = ast_node(attr, typeOpr);  printf("[EXPR]\n"); }
@@ -94,6 +96,7 @@ int main(int argc, char **argv)
     printf("Input file is [%s]\n", (argc > 1 ? argv[1] : "stdin"));
     yyparse();
     // statistic_table(table);
+    ast_dfs(root);
     free_table(table);
     ast_free(root);
     return 0;

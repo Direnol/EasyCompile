@@ -74,7 +74,7 @@ SIGN [-+]
 {ID} {
     PRINT(ID);
     ADD_T(ID);
-    // yylval.str = strdup(yytext);
+    yylval.str = strdup(yytext);
     return ID;
 }
 
@@ -85,13 +85,13 @@ SIGN [-+]
 {SIGN}?{NUM}+ {
     PRINT(CONST_INT);
     ADD_T(CONST_INT);
-    // yylval.str = strdup(yytext);
+    yylval.str = strdup(yytext);
     return CONST_INT;
 }
 
 {SIGN}?({NUM}+\.{NUM}+|{NUM}+\.|{NUM}+)([eE][+-]?{NUM}+)? {
     PRINT(CONST_DOUBLE);
-    // yylval.str = strdup(yytext);
+    yylval.str = strdup(yytext);
     ADD_T(CONST_DOUBLE);
     return CONST_DOUBLE;
 }
