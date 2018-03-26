@@ -24,7 +24,7 @@ attr_t attr;
 %type <type> INT CHAR DOUBLE TYPE
 %type <str> ID CONST_INT CONST_DOUBLE
 %type <tree> IF ELSE PRINT SCAN FOR RETURN
-%type <tree> START ATOM DEFVAR INITVAR FUNC ARGS BODY EVALUATE EXPR TERM
+%type <tree> START ATOM DEFVAR INITVAR FUNC ARGS BODY EVAL EXPR EXPR1
 %type <tree> CONST_VAR FUNC_NAME
 
 %%
@@ -40,8 +40,8 @@ DEFVAR: TYPE ID ';' { attr.defvar = (_defvar_t) {$1, $2, NULL}; $$ = ast_node(at
 
 FUNC_NAME: TYPE ID { attr.defvar = (_defvar_t) {$1, $2, NULL}; $$ = ast_node(attr, typeDef); }
 
-INITVAR:    TYPE ID '=' EVALUATE ';' { attr.defvar = (_defvar_t) {$1, $2, $4}; $$ = ast_node(attr, typeDef); }
-        | ID '=' EVALUATE ';' { attr.defvar = (_defvar_t) {-1, $1, $3}; $$ = ast_node(attr, typeIvar); }
+INITVAR:    TYPE ID '=' EVAL';' { attr.defvar = (_defvar_t) {$1, $2, $4}; $$ = ast_node(attr, typeDef); }
+        | ID '=' EVAL ';' { attr.defvar = (_defvar_t) {-1, $1, $3}; $$ = ast_node(attr, typeIvar); }
 
 FUNC:   FUNC_NAME '(' ARGS ')' '{' BODY '}' { attr.func = (_func_t) {$1, $3, $6}; $$ = ast_node(attr, typeFunc); }
 
@@ -50,17 +50,17 @@ ARGS:   FUNC_NAME { attr.args = (_args_t) {$1, NULL}; $$ = ast_node(attr, typeAr
 
 BODY:   DEFVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
         | INITVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
-        | RETURN EVALUATE ';' { attr.body = (_body_t) {$2, NULL}; $$ = ast_node(attr, typeRet);}
+        | RETURN EVAL ';' { attr.body = (_body_t) {$2, NULL}; $$ = ast_node(attr, typeRet);}
 
-EVALUATE:   EXPR { $$ = $1;}
+EVAL:   EXPR { $$ = $1;}
 
-EXPR:   TERM { $$ = $1; }
-        | EXPR '+' TERM { attr.oper = (_oper_t) {'+', $1, $3}; $$ = ast_node(attr, typeOpr); }
-        | EXPR '-' TERM { attr.oper = (_oper_t) {'-', $1, $3}; $$ = ast_node(attr, typeOpr); }
+EXPR:   EXPR1 { $$ = $1; }
+        | EXPR '+' EXPR1 { attr.oper = (_oper_t) {'+', $1, $3}; $$ = ast_node(attr, typeOpr); }
+        | EXPR '-' EXPR1 { attr.oper = (_oper_t) {'-', $1, $3}; $$ = ast_node(attr, typeOpr); }
 
-TERM:   CONST_VAR { $$ = $1 ; }
-        | TERM '*' CONST_VAR { attr.oper = (_oper_t) {'*', $1, $3}; $$ = ast_node(attr, typeOpr); }
-        | TERM '/' CONST_VAR { attr.oper = (_oper_t) {'/', $1, $3}; $$ = ast_node(attr, typeOpr); }
+EXPR1:   CONST_VAR { $$ = $1 ; }
+        | EXPR1 '*' CONST_VAR { attr.oper = (_oper_t) {'*', $1, $3}; $$ = ast_node(attr, typeOpr); }
+        | EXPR1 '/' CONST_VAR { attr.oper = (_oper_t) {'/', $1, $3}; $$ = ast_node(attr, typeOpr); }
 
 CONST_VAR:    CONST_INT { attr.term = (_term_t) {INT, $1}; $$ = ast_node(attr, typeTerm); }
         | CONST_DOUBLE { attr.term = (_term_t) {DOUBLE, $1}; $$ = ast_node(attr, typeTerm); }
