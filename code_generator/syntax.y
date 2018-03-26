@@ -29,11 +29,11 @@ attr_t attr;
 
 %%
 
-START:  ATOM { ast_push(root, $1); printf("[PROGRAM]\n");}
-        | START ATOM { ast_push(root, $2); puts("[ATOM]"); }
+START:  ATOM { ast_push(root, $1); }
+        | START ATOM { ast_push(root, $2); }
 
-ATOM:   FUNC { $$ = $1;  printf("[FUNC]\n");}
-        | DEFVAR { $$ = $1; puts("[DEFVAR]\n"); }
+ATOM:   FUNC { $$ = $1; }
+        | DEFVAR { $$ = $1; }
 
 
 DEFVAR: TYPE ID ';' { attr.defvar = (_defvar_t) {$1, $2, NULL}; $$ = ast_node(attr, typeDef); }
@@ -45,22 +45,22 @@ INITVAR:    TYPE ID '=' EVALUATE ';' { attr.defvar = (_defvar_t) {$1, $2, $4}; $
 
 FUNC:   FUNC_NAME '(' ARGS ')' '{' BODY '}' { attr.func = (_func_t) {$1, $3, $6}; $$ = ast_node(attr, typeFunc); }
 
-ARGS:   FUNC_NAME { attr.args = (_args_t) {$1, NULL}; $$ = ast_node(attr, typeArgs); puts("[ARGS]"); }
+ARGS:   FUNC_NAME { attr.args = (_args_t) {$1, NULL}; $$ = ast_node(attr, typeArgs); /*puts("[ARGS]");*/ }
         | FUNC_NAME ',' ARGS { attr.args = (_args_t) {$1, $3}; $$ = ast_node(attr, typeArgs); }
 
 BODY:   DEFVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
         | INITVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
         | RETURN EVALUATE ';' { attr.body = (_body_t) {$2, NULL}; $$ = ast_node(attr, typeRet);}
 
-EVALUATE:   EXPR { $$ = $1; printf("[EVAL]\n"); }
+EVALUATE:   EXPR { $$ = $1;}
 
-EXPR:   TERM { $$ = $1; printf("[EXPR]\n"); }
-        | EXPR '+' TERM { attr.oper = (_oper_t) {'+', $1, $3}; $$ = ast_node(attr, typeOpr);  printf("[EXPR]\n"); }
-        | EXPR '-' TERM { attr.oper = (_oper_t) {'-', $1, $3}; $$ = ast_node(attr, typeOpr); printf("[EXPR]\n"); }
+EXPR:   TERM { $$ = $1; }
+        | EXPR '+' TERM { attr.oper = (_oper_t) {'+', $1, $3}; $$ = ast_node(attr, typeOpr); }
+        | EXPR '-' TERM { attr.oper = (_oper_t) {'-', $1, $3}; $$ = ast_node(attr, typeOpr); }
 
-TERM:   CONST_VAR { $$ = $1 ; printf("[TERM]\n"); }
-        | TERM '*' CONST_VAR { attr.oper = (_oper_t) {'*', $1, $3}; $$ = ast_node(attr, typeOpr); printf("[TERM]\n"); }
-        | TERM '/' CONST_VAR { attr.oper = (_oper_t) {'/', $1, $3}; $$ = ast_node(attr, typeOpr); printf("[TERM]\n"); }
+TERM:   CONST_VAR { $$ = $1 ; }
+        | TERM '*' CONST_VAR { attr.oper = (_oper_t) {'*', $1, $3}; $$ = ast_node(attr, typeOpr); }
+        | TERM '/' CONST_VAR { attr.oper = (_oper_t) {'/', $1, $3}; $$ = ast_node(attr, typeOpr); }
 
 CONST_VAR:    CONST_INT { attr.term = (_term_t) {INT, $1}; $$ = ast_node(attr, typeTerm); }
         | CONST_DOUBLE { attr.term = (_term_t) {DOUBLE, $1}; $$ = ast_node(attr, typeTerm); }

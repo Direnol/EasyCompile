@@ -108,29 +108,48 @@ void ast_dfs(struct Ast *node)
             break;
         case typeOpr:
 #define op node->attr.oper
-            printf("%c ", op.oper);
+            printf("(%c ", op.oper);
             c1 = op.left;
+            ast_dfs(c1);
             c2 = op.right;
+            ast_dfs(c2);
+            printf(") ");
+            return;
             break;
         case typeId:
             P(ID);
             break;
         case typeTerm:
 #define tm node->attr.term
-            printf("[(%s)%s] ", _get_type(tm.type), tm.id);
+            printf("%s ", tm.id);
             break;
         case typeFunc:
-            c1 = node->attr.func.name;
-            c2 = node->attr.func.args;
-            c3 = node->attr.func.body;
-            P(FUNC);
+#define fnc node->attr.func
+            c1 = fnc.name;
+            c2 = fnc.args;
+            c3 = fnc.body;
+            printf("[");
+            ast_dfs(c1);
+            printf("(");
+            ast_dfs(c2);
+            printf(") {");
+            ast_dfs(c3);
+            printf("}]\n");
+            return;
             break;
         case typeArgs:
             c1 = node->attr.args.var;
             c2 = node->attr.args.next;
             P(ARG);
             break;
+#define bd node->attr.body
         case typeRet:
+            c1 = bd.val;
+            printf("return ");
+            ast_dfs(c1);
+            printf(";");
+            return;
+            break;
         case typeBody:
             c1 = node->attr.body.val;
             c2 = node->attr.body.next;
