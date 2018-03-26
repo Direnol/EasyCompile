@@ -8,7 +8,7 @@ idt_t *table = NULL;
 %}
 NUM [0-9]
 CHAR [a-zA-Z]
-ID ({CHAR}|_)({CHAR}|{NUM})*
+ID ({CHAR}|_)({CHAR}|{NUM}|_)*
 ws [ \t\n]
 OP [-+*/<>?!%=~]
 DLM [();{},]

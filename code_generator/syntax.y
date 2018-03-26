@@ -30,10 +30,10 @@ attr_t attr;
 %%
 
 START:  ATOM { ast_push(root, $1); printf("[PROGRAM]\n");}
-        | ATOM START { /*ast_push(root, $1);*/ }
+        | START ATOM { ast_push(root, $2); puts("[ATOM]"); }
 
 ATOM:   FUNC { $$ = $1;  printf("[FUNC]\n");}
-        | DEFVAR { /*$$ = $1;*/ printf("[DEFVAR]\n"); }
+        | DEFVAR { $$ = $1; puts("[DEFVAR]\n"); }
 
 
 DEFVAR: TYPE ID ';' { attr.defvar = (_defvar_t) {$1, $2, NULL}; $$ = ast_node(attr, typeDef); }

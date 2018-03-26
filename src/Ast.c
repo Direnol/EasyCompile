@@ -103,7 +103,7 @@ void ast_dfs(struct Ast *node)
             break;
         case typeDef:
 #define dv node->attr.defvar
-            printf("%s %s%c", _get_type(dv.type), dv.key, (dv.expr ? '=' : '\n'));
+            printf("%s %s%s", _get_type(dv.type), dv.key, (dv.expr ? "=" : ";\n"));
             c1 = dv.expr;
             break;
         case typeOpr:
@@ -116,8 +116,8 @@ void ast_dfs(struct Ast *node)
             P(ID);
             break;
         case typeTerm:
-            free(node->attr.term.id);
-            P(TERM);
+#define tm node->attr.term
+            printf("[(%s)%s] ", _get_type(tm.type), tm.id);
             break;
         case typeFunc:
             c1 = node->attr.func.name;
@@ -151,16 +151,18 @@ void ast_dfs(struct Ast *node)
 
 Ast_t *ast_push(Ast_t *parent, Ast_t *child)
 {
-    if (parent->attr.atom.head == NULL) {
-        parent->attr.atom.head = parent->attr.atom.tail = ast_init(typeList);
-        parent->attr.atom.tail->attr.list.val = child;
-        return parent->attr.atom.head;
+#define atm parent->attr.atom
+    if (atm.head == NULL) {
+        atm.head = atm.tail = ast_init(typeList);
+        atm.tail->attr.list.val = child;
+        return atm.head;
     }
 
-    parent->attr.atom.tail->attr.list.next = ast_init(typeList);
-    parent->attr.atom.tail = parent->attr.atom.tail->attr.atom.tail->attr.list.next;
-    parent->attr.atom.tail->attr.list.val = child;
-    return parent->attr.atom.tail;
+    Ast_t *p = ast_init(typeList);
+    atm.tail->attr.list.next = p;
+    atm.tail = p;
+    p->attr.list.val = child;
+    return p;
 }
 
 char *_get_type(int type)

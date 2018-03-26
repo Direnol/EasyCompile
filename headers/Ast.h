@@ -109,14 +109,9 @@ typedef union {
     struct _func func;
 } attr_t;
 
-union list {
-    char *key;
-    int err;
-};
 
 struct Ast {
     nodeEnum type;
-    union list arg;
     attr_t attr;
 };
 
