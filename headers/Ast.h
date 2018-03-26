@@ -2,7 +2,6 @@
 #define LEXER_AST_H
 
 #include "hash_table.h"
-#include <glib-2.0/glib.h>
 
 typedef enum {
     typeRoot,
@@ -17,6 +16,8 @@ typedef enum {
     typeBody,
     typeRet,
     typeIvar,
+    typeCall,
+    typeFargs,
     typeErr
 } nodeEnum;
 
@@ -96,6 +97,18 @@ struct _args {
 };
 typedef struct _args _args_t;
 
+struct _call {
+    char *id;
+    Ast_t *args;
+};
+typedef struct _call _call_t;
+
+struct _fargs {
+    char *id;
+    Ast_t *next;
+};
+typedef struct _fargs _fargs_t;
+
 typedef union {
     struct _atom atom;
     struct  _list list;
@@ -107,6 +120,8 @@ typedef union {
     struct _for for_;
     struct _args args;
     struct _func func;
+    struct _call call;
+    struct _fargs fargs;
 } attr_t;
 
 

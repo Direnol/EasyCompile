@@ -72,6 +72,16 @@ void ast_free(Ast_t *node)
             c2 = node->attr.body.next;
             P(BODY);
             break;
+        case typeCall:
+#define cll node->attr.call
+            c1 = cll.args;
+            free(cll.id);
+            break;
+        case typeFargs:
+#define frg node->attr.fargs
+            c1 = frg.next;
+            free(frg.id);
+            break;
         default:
             c1 = c2 = NULL;
             P(DEFAULT);
@@ -154,6 +164,18 @@ void ast_dfs(struct Ast *node)
             c1 = node->attr.body.val;
             c2 = node->attr.body.next;
             P(BODY);
+            break;
+        case typeCall:
+            printf("(%s ", cll.id);
+            c1 = cll.args;
+            ast_dfs(c1);
+            printf(")\n");
+            return;
+            break;
+
+        case typeFargs:
+            printf("%s ", frg.id);
+            c1 = frg.next;
             break;
         default:
             c1 = c2 = NULL;

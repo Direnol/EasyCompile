@@ -25,7 +25,7 @@ attr_t attr;
 %type <str> ID CONST_INT CONST_DOUBLE
 %type <tree> IF ELSE PRINT SCAN FOR RETURN
 %type <tree> START ATOM DEFVAR INITVAR FUNC ARGS BODY EVAL EXPR EXPR1
-%type <tree> CONST_VAR FUNC_NAME
+%type <tree> CONST_VAR FUNC_NAME CALL FARG
 
 %%
 
@@ -51,6 +51,13 @@ ARGS:   FUNC_NAME { attr.args = (_args_t) {$1, NULL}; $$ = ast_node(attr, typeAr
 BODY:   DEFVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
         | INITVAR BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
         | RETURN EVAL ';' { attr.body = (_body_t) {$2, NULL}; $$ = ast_node(attr, typeRet);}
+        | CALL BODY { attr.body = (_body_t) {$1, $2}; $$ = ast_node(attr, typeBody); }
+
+CALL: ID '(' FARG ')' ';' { attr.call = (_call_t) {$1, $3}; $$ = ast_node(attr, typeCall); }
+
+FARG:   ID { attr.fargs = (_fargs_t) {$1, NULL}; $$ = ast_node(attr, typeFargs); }
+        | ID ',' FARG { attr.fargs = (_fargs_t) {$1, $3}; $$ = ast_node(attr, typeFargs); }
+        | { attr.fargs = (_fargs_t) {NULL, NULL}; $$ = ast_node(attr, typeFargs); }
 
 EVAL:   EXPR { $$ = $1;}
 
