@@ -39,14 +39,14 @@ set(SRC src/HashTable/HashTable.cpp
         src/ASM/StringGenerator.cpp
         src/ClassAst/AstCond.cpp src/HashTable/Table.cpp
         src/HashTable/HashNode.cpp src/HashTable/HashEntry.cpp
-        src/Lexer.cpp)
+        )
 
 set(INC inc/HashTable/HashTable.h
         inc/Ast.h inc/asm/Asm.h
         inc/helpers/WriteAdapter.h
         inc/helpers/Singleton.h
         inc/asm/ASM_VARS.h
-        inc/helpers/StringGenerator.h inc/HashTable/HashNode.h inc/HashTable/HashEntry.h inc/Lexer.h )
+        inc/helpers/StringGenerator.h inc/HashTable/HashNode.h inc/HashTable/HashEntry.h)
 
 add_executable(compile ${SRC} ${INC} ${BISON_parser_OUTPUTS} ${FLEX_lexer_OUTPUTS})
 target_link_libraries(compile fl y m)

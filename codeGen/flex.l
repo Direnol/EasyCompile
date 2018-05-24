@@ -1,7 +1,9 @@
 %option noyywrap yylineno
 
 %{
-#include "../inc/Lexer.h"
+#include "../inc/Ast.h"
+#include "../inc/parser.h"
+#include <cstdio>
     int ch = 1;
     HashTable* hash_table = Singleton<HashTable>::getInstance();
     void comment(char end);
@@ -175,29 +177,29 @@ SIGN [-+]
 
 void comment(char end)
 {
-    int pos = ch;
-    int posl = yylineno;
-	char c, c1;
-    if (end == '/') {
-        while ((c = yyinput()) != '\n' && c != 0) { ++ch; }
-        return;
-    }
-
-loop:
-	while ((c = yyinput()) != '*' && c != 0) {
-	    ++ch;
-	    if (c == '\n')  ch = 1;
-
+	int pos = ch;
+	int posl = yylineno;
+	int c, c1;
+	if (end == '/') {
+		while ((c = yyinput()) != '\n' && c != 0) { ++ch; }
+		++ch;
+		return;
 	}
 
-	if ((c1 = yyinput()) != '/' && c != 0)
-	{
+	loop:
+	while ((c = yyinput()) != '*' && c != 0) {
+		++ch;
+		if (c == '\n') ch = 1;
+	}
+
+	if ((c1 = yyinput()) != '/' && c != 0) {
+		ch += 2;
 		unput(c1);
 		goto loop;
 	}
 
 
-    if (c == 0) {
-        printf("unterminated comment: %d:%d\n", pos, posl);
-    }
+	if (c == 0) {
+		printf("unterminated comment: %d:%d\n", posl, pos);
+	}
 }

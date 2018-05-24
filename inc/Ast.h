@@ -26,6 +26,7 @@ namespace AST {
         WriteAdapter *write_adapter;
         AsmVars *asmVars;
         HashTable *hashTable;
+        bool needed;
     public:
         BaseAST();
 
@@ -34,6 +35,9 @@ namespace AST {
         virtual std::string Generate_code() = 0;
 
         virtual void Dfs() = 0;
+
+        virtual void setNeed();
+
     };
 
     /// IntNumberExprAST - Класс узла выражения для числовых литералов (Например, "1").
@@ -71,10 +75,9 @@ namespace AST {
     /// VariableExprAST - Класс узла выражения для переменных (например, "a").
     class VariableExprAST : public BaseAST {
         std::string Name;
-        bool Is_addr;
     public:
-        explicit VariableExprAST(std::string name, bool is_addr = false)
-                : Name(std::move(name)), Is_addr(is_addr)
+        explicit VariableExprAST(std::string name)
+                : Name(std::move(name))
         {}
 
         ~VariableExprAST() override = default;
@@ -83,8 +86,6 @@ namespace AST {
 
         void Dfs() final;
 
-        void setAddr()
-        { this->Is_addr = true; }
     };
 
     class VariableUndefAST : public BaseAST {
@@ -155,10 +156,9 @@ namespace AST {
     public:
         std::string Id;
         BaseAST *Expr;
-        bool need_ret;
     public:
-        EvalAST(std::string id, BaseAST *expr, bool need = false)
-                : Id(std::move(id)), Expr(expr), need_ret(need)
+        EvalAST(std::string id, BaseAST *expr)
+                : Id(std::move(id)), Expr(expr)
         {}
 
         ~EvalAST() override;
@@ -167,7 +167,6 @@ namespace AST {
 
         void Dfs() final;
 
-        void SetNeed();
     };
 
     class JumpAST : public BaseAST {
@@ -230,7 +229,6 @@ namespace AST {
 
     };
 
-    ///LinkAST - Связующий элемент в дереве
     class LinkAST : public BaseAST {
         std::vector<BaseAST *> *Childs = nullptr;
     public:
@@ -308,7 +306,6 @@ namespace AST {
         void Dfs() final;
     };
 
-    /// If else
     class IfAST : public BaseAST {
         BaseAST *Statement;
         BaseAST *Body;

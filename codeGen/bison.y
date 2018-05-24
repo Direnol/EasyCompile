@@ -1,5 +1,5 @@
 %{
-    #include "../inc/Lexer.h"
+    #include "../inc/Ast.h"
     #include "../inc/asm/Asm.h"
     #include "../inc/asm/ASM_VARS.h"
     #include "../inc/helpers/Singleton.h"
@@ -38,7 +38,7 @@
 %type <expr> EXPR2 EXPR1 EXPR0 EXPR CONST DEFVAR UNDEFVAR VAR EVAL
 %type <expr> MARK GOTO ATOM CALL ARGS ARG RET
 %type <expr> ANYVAR LOOP ATOMLLIST IFELSE ELSEIF BODY
-%type <expr> PROTO LEVAL OPERS
+%type <expr> PROTO LEVAL OPERS VARA
 
 %%
 
@@ -89,7 +89,7 @@ ARG: EXPR { $$ = $1; }
                         $$ = ast->Getter<AST::StringAST>(str_name, std::string($1));
                         free($1);
                  }
-        | EVAL { reinterpret_cast<AST::EvalAST*>($1)->SetNeed(); $$ = $1; }
+        | EVAL { ($1)->setNeed(); $$ = $1; }
         ;
 
 DEFVAR: INT ID_LOC '=' EXPR  { if ($2) { hash_table->CreateEntry($1, std::string($2)); $$ = ast->Getter<AST::VariableDefAST>($1, std::string($2), $4); } else $$ = nullptr; free($2); }
@@ -162,12 +162,16 @@ EXPR2:  VAR { $$ = $1; }
         | '~' EXPR2 { $$ = ast->Getter<AST::UnaryAST>('~', $2); }
         | '-' EXPR2 { $$ = ast->Getter<AST::UnaryAST>('-', $2); }
         | '!' EXPR2  { $$ = ast->Getter<AST::UnaryAST>('!', $2); }
-        | '&' VAR  { reinterpret_cast<AST::VariableExprAST*>($2)->setAddr(); $$ = $2; }
-        | VAR INC { reinterpret_cast<AST::VariableExprAST*>($1)->setAddr(); $$ = ast->Getter<AST::UnaryAST>(oINC,  $1); }
-        | INC VAR { reinterpret_cast<AST::VariableExprAST*>($2)->setAddr(); $$ = ast->Getter<AST::UnaryAST>(oIINC,  $2); }
-        | VAR  DEC { reinterpret_cast<AST::VariableExprAST*>($1)->setAddr(); $$ = ast->Getter<AST::UnaryAST>(oDEC, $1); }
-        | DEC VAR  { reinterpret_cast<AST::VariableExprAST*>($2)->setAddr(); $$ = ast->Getter<AST::UnaryAST>(oIDEC, $2); }
+        | '*' EXPR2  { $$ = ast->Getter<AST::UnaryAST>('*', $2); }
+        | '&' VARA  { ($2)->setNeed(); $$ = $2; }
+        | VARA INC { ($1)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oINC,  $1); }
+        | INC VARA { ($2)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oIINC,  $2); }
+        | VARA  DEC { ($1)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oDEC, $1); }
+        | DEC VARA  { ($2)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oIDEC, $2); }
         | CALL { $$ = $1; }
+        ;
+
+VARA:   ID_REC { if ($1) $$ = ast->Getter<AST::VariableExprAST>(std::string($1)); else $$ = nullptr; free($1); }
         ;
 
 VAR:    CONST { $$ = $1; }
