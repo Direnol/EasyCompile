@@ -1,25 +1,51 @@
-cmake_minimum_required(VERSION 3.10)
-project(Lexer)
+cmake_minimum_required(VERSION 3.9)
+project(Compile CXX)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+message(STATUS "GCC: Enabled c++17 support")
 
-FIND_PACKAGE(FLEX)
-set(INPUT_FLEX code_generator/rule.l)
-set(OUTPUT_FLEX ${CMAKE_SOURCE_DIR}/src/lex.c)
-FLEX_TARGET(lexer ${INPUT_FLEX} ${OUTPUT_FLEX})
-
+FIND_PACKAGE(FLEX REQUIRED)
 FIND_PACKAGE(BISON)
-set(INPUT_BISON code_generator/syntax.y)
-set(OUTPUT_BISON_C ${CMAKE_SOURCE_DIR}/src/syntax.c)
-set(OUTPUT_BISON_H ${CMAKE_SOURCE_DIR}/headers/syntax.h)
-BISON_TARGET(syntax ${INPUT_BISON} ${OUTPUT_BISON_C} COMPILE_FLAGS "-v" DEFINES_FILE ${OUTPUT_BISON_H})
-ADD_FLEX_BISON_DEPENDENCY(lexer syntax)
 
-set(LEX_SRC src/hash_table.c headers/hash_table.h headers/structs.h ${FLEX_lexer_OUTPUTS})
-set(SYN_SRC ${LEX_SRC} ${BISON_syntax_OUTPUTS} src/Ast.c headers/Ast.h src/asm.c headers/asm.h)
+SET(FlexInput ${CMAKE_SOURCE_DIR}/codeGen/flex/flex.l)
+SET(FlexOutput ${CMAKE_SOURCE_DIR}/src/lexer.cpp)
+IF(FLEX_FOUND)
+    FLEX_TARGET(lexer ${FlexInput} ${FlexOutput})
+ENDIF()
 
-add_executable(Lexer ${LEX_SRC})
-target_link_libraries(Lexer fl)
+SET(BisonInput ${CMAKE_SOURCE_DIR}/codeGen/bison/bison.y)
+SET(BisonOutput_cpp ${CMAKE_SOURCE_DIR}/src/parser.cpp)
+SET(BisonOutput_h ${CMAKE_SOURCE_DIR}/inc/parser.h)
+IF(BISON_FOUND)
+    BISON_TARGET(parser ${BisonInput} ${BisonOutput_cpp} DEFINES_FILE ${BisonOutput_h})
+ENDIF()
 
-add_executable(Syntax ${SYN_SRC})
-target_link_libraries(Syntax m y fl)
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/bin)
+ADD_FLEX_BISON_DEPENDENCY(lexer parser)
+
+execute_process(COMMAND /bin/chmod +x "../build/Run.sh")
+execute_process(COMMAND /bin/chmod +x "../build/PostRun.sh")
+
+set(SRC src/HashTable/HashTable.cpp
+        src/ClassAst/Ast.cpp
+        src/ASM/Asm.cpp
+        src/ASM/WriteAdapter.cpp
+        src/ClassAst/AstGet.cpp
+        src/ClassAst/AstLink.cpp
+        src/ClassAst/AstVar.cpp
+        src/ClassAst/AstExpr.cpp
+        src/ASM/ASM_VARS.cpp
+        src/ClassAst/AstFunc.cpp
+        src/ASM/StringGenerator.cpp
+        src/ClassAst/AstCond.cpp src/HashTable/Table.cpp
+        src/HashTable/HashNode.cpp src/HashTable/HashEntry.cpp)
+
+set(INC inc/HashTable/HashTable.h
+        inc/Ast.h inc/asm/Asm.h
+        inc/helpers/WriteAdapter.h
+        inc/helpers/Singleton.h
+        inc/asm/ASM_VARS.h
+        inc/helpers/StringGenerator.h inc/HashTable/HashNode.h inc/HashTable/HashEntry.h)
+
+add_executable(compile ${SRC} ${INC} ${BISON_parser_OUTPUTS} ${FLEX_lexer_OUTPUTS})
+target_link_libraries(compile fl y m)
