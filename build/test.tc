@@ -6,7 +6,7 @@ int fact = 0;
 int st;
 
 scanf("%d", &st);
-
+st++; // += 1;
 if (st <= 0) {
 printf("Err\n");
 return -1;

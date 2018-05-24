@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_DIRENOL_CLIONPROJECTS_COMPILE_INC_PARSER_H_INCLUDED
-# define YY_YY_HOME_DIRENOL_CLIONPROJECTS_COMPILE_INC_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_DIRENOL_CLIONPROJECTS_EASYCOMPILE_INC_PARSER_H_INCLUDED
+# define YY_YY_HOME_DIRENOL_CLIONPROJECTS_EASYCOMPILE_INC_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -75,14 +75,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 29 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1909  */
+#line 29 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1909  */
 
     int type;
     char* str;
     AST::BaseAST* expr;
     // TODO Fix unary priority
 
-#line 86 "/home/direnol/CLionProjects/Compile/inc/parser.h" /* yacc.c:1909  */
+#line 86 "/home/direnol/CLionProjects/EasyCompile/inc/parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -95,4 +95,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_DIRENOL_CLIONPROJECTS_COMPILE_INC_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_DIRENOL_CLIONPROJECTS_EASYCOMPILE_INC_PARSER_H_INCLUDED  */

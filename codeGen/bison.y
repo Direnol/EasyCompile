@@ -1,5 +1,5 @@
 %{
-    #include "../inc/Ast.h"
+    #include "../inc/Lexer.h"
     #include "../inc/asm/Asm.h"
     #include "../inc/asm/ASM_VARS.h"
     #include "../inc/helpers/Singleton.h"
@@ -129,7 +129,7 @@ LOOP:   FOR '(' ANYVAR ';' EXPR ';' LEVAL ')' '{' BODY '}' { $$ = ast->Getter<AS
 
 EVAL:   ID_REC '=' EXPR   { if ($1) $$ = ast->Getter<AST::EvalAST>($1, $3); else $$ = nullptr; free($1); }
         | ID_REC OPME EXPR { if ($1) $$ = ast->Getter<AST::EvalAST>(std::string($1),
-                ast->Getter<AST::BinaryExprAST>($2, ast->Getter<AST::VariableExprAST>(std::string(std::string($1))), $3));
+                ast->Getter<AST::BinaryExprAST>($2, ast->Getter<AST::VariableExprAST>(std::string($1)), $3));
             else $$ = nullptr; free($1); }
         ;
 

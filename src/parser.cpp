@@ -62,9 +62,9 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:339  */
+#line 1 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:339  */
 
-    #include "../inc/Ast.h"
+    #include "../inc/Lexer.h"
     #include "../inc/asm/Asm.h"
     #include "../inc/asm/ASM_VARS.h"
     #include "../inc/helpers/Singleton.h"
@@ -83,7 +83,7 @@
     AST::Ast* ast;
     bool valid = true;
 
-#line 87 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:339  */
+#line 87 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -103,8 +103,8 @@
 
 /* In a future release of Bison, this section will be replaced
    by #include "parser.h".  */
-#ifndef YY_YY_HOME_DIRENOL_CLIONPROJECTS_COMPILE_INC_PARSER_H_INCLUDED
-# define YY_YY_HOME_DIRENOL_CLIONPROJECTS_COMPILE_INC_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_DIRENOL_CLIONPROJECTS_EASYCOMPILE_INC_PARSER_H_INCLUDED
+# define YY_YY_HOME_DIRENOL_CLIONPROJECTS_EASYCOMPILE_INC_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -148,14 +148,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 29 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:355  */
+#line 29 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:355  */
 
     int type;
     char* str;
     AST::BaseAST* expr;
     // TODO Fix unary priority
 
-#line 159 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:355  */
+#line 159 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -168,11 +168,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_DIRENOL_CLIONPROJECTS_COMPILE_INC_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_DIRENOL_CLIONPROJECTS_EASYCOMPILE_INC_PARSER_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 176 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:358  */
+#line 176 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -471,14 +471,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    46,    49,    52,    53,    56,    57,    58,
-      59,    60,    61,    62,    63,    64,    65,    68,    71,    72,
-      75,    78,    81,    82,    85,    86,    91,    94,    97,   100,
-     101,   102,   105,   106,   109,   112,   115,   116,   119,   120,
-     123,   126,   129,   130,   135,   136,   137,   138,   139,   140,
-     141,   142,   143,   144,   147,   148,   149,   152,   153,   154,
-     155,   156,   159,   160,   161,   162,   163,   164,   165,   166,
-     167,   168,   169,   172,   173,   176,   179,   182
+       0,    45,    45,    46,    49,    53,    54,    57,    58,    59,
+      60,    61,    62,    63,    64,    65,    66,    69,    72,    73,
+      76,    79,    82,    83,    86,    87,    92,    95,    98,   101,
+     102,   103,   106,   107,   110,   113,   116,   117,   120,   121,
+     124,   127,   130,   131,   136,   137,   138,   139,   140,   141,
+     142,   143,   144,   145,   148,   149,   150,   153,   154,   155,
+     156,   157,   160,   161,   162,   163,   164,   165,   166,   167,
+     168,   169,   170,   173,   174,   177,   180,   183
 };
 #endif
 
@@ -1353,469 +1353,469 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 45 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 45 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { ast->AddToLink((yyvsp[0].expr)); }
-#line 1359 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1359 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 46 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 46 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { ast->AddToLink((yyvsp[0].expr)); }
-#line 1365 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1365 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 49 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 49 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BodyAST>((yyvsp[0].expr)); }
-#line 1371 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1371 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 52 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 53 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BodyLListAST>(nullptr, (yyvsp[0].expr)); }
-#line 1377 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1377 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 53 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 54 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BodyLListAST>((yyvsp[0].expr), (yyvsp[-1].expr)); }
-#line 1383 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1383 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 56 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 57 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1389 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1389 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 57 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 58 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1395 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1395 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 58 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 59 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1401 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1401 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 59 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 60 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1407 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1407 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 60 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 61 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1413 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1413 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 61 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 62 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1419 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1419 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 62 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 63 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1425 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1425 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 63 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 64 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1431 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1431 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 64 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 65 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1437 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1437 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 65 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 66 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1443 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1443 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 68 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 69 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[0].str)) { hash_table->CreateEntry((yyvsp[-1].type), std::string((yyvsp[0].str))); (yyval.expr) = ast->Getter<AST::PrototypeFuncAST>((yyvsp[-1].type), std::string((yyvsp[0].str))); } else (yyval.expr) = nullptr; free((yyvsp[0].str)); }
-#line 1449 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1449 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 71 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 72 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.type) = (yyvsp[0].type); }
-#line 1455 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1455 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 72 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 73 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.type) = (yyvsp[0].type); }
-#line 1461 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1461 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 75 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 76 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::ReturnAST>((yyvsp[0].expr)); }
-#line 1467 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1467 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 78 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 79 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[-3].str)) (yyval.expr) = ast->Getter<AST::CallFuncAST>(std::string((yyvsp[-3].str)), ast->Getter<AST::ArgsAST>((yyvsp[-1].expr))); else (yyval.expr) = nullptr; free((yyvsp[-3].str)); }
-#line 1473 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1473 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 81 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 82 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::ArgListAST>(nullptr, (yyvsp[0].expr)); }
-#line 1479 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1479 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 82 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 83 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::ArgListAST>((yyvsp[0].expr), (yyvsp[-2].expr)); }
-#line 1485 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1485 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 85 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 86 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1491 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1491 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 86 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 87 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     {      std::string str_name = Singleton<StringGenerator>::getInstance()->Generate();
                         Singleton<FormatAcum>::getInstance()->Add(str_name, std::string((yyvsp[0].str)));
                         (yyval.expr) = ast->Getter<AST::StringAST>(str_name, std::string((yyvsp[0].str)));
                         free((yyvsp[0].str));
                  }
-#line 1501 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1501 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 91 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 92 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { reinterpret_cast<AST::EvalAST*>((yyvsp[0].expr))->SetNeed(); (yyval.expr) = (yyvsp[0].expr); }
-#line 1507 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1507 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 94 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 95 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[-2].str)) { hash_table->CreateEntry((yyvsp[-3].type), std::string((yyvsp[-2].str))); (yyval.expr) = ast->Getter<AST::VariableDefAST>((yyvsp[-3].type), std::string((yyvsp[-2].str)), (yyvsp[0].expr)); } else (yyval.expr) = nullptr; free((yyvsp[-2].str)); }
-#line 1513 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1513 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 97 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 98 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[0].str)) { hash_table->CreateEntry((yyvsp[-1].type), std::string((yyvsp[0].str))); (yyval.expr) = ast->Getter<AST::VariableUndefAST>((yyvsp[-1].type), std::string((yyvsp[0].str))); } else (yyval.expr) = nullptr; free((yyvsp[0].str)); }
-#line 1519 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1519 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 100 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 101 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1525 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1525 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 101 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 102 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1531 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1531 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 102 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 103 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = nullptr; }
-#line 1537 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1537 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 105 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 106 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1543 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1543 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 106 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 107 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1549 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1549 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 109 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 110 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[-1].str)) { hash_table->CreateEntry(MARK_TOK, std::string((yyvsp[-1].str))); (yyval.expr) = ast->Getter<AST::MarkAST>(std::string((yyvsp[-1].str))); } else (yyval.expr) = nullptr; free((yyvsp[-1].str)); }
-#line 1555 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1555 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 112 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 113 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[0].str)) { (yyval.expr) = ast->Getter<AST::JumpAST>(std::string((yyvsp[0].str))); } else { (yyval.expr) = nullptr; } free((yyvsp[0].str)); }
-#line 1561 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1561 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 115 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 116 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1567 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1567 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 116 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 117 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1573 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1573 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 119 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 120 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::IfAST>((yyvsp[-4].expr), (yyvsp[-1].expr), nullptr); }
-#line 1579 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1579 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 120 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 121 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::IfAST>((yyvsp[-5].expr), (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1585 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1585 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 123 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 124 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::ElseAST>((yyvsp[-1].expr)); }
-#line 1591 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1591 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 126 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 127 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LoopAST>((yyvsp[-8].expr), (yyvsp[-6].expr), (yyvsp[-4].expr), (yyvsp[-1].expr)); }
-#line 1597 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1597 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 129 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 130 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[-2].str)) (yyval.expr) = ast->Getter<AST::EvalAST>((yyvsp[-2].str), (yyvsp[0].expr)); else (yyval.expr) = nullptr; free((yyvsp[-2].str)); }
-#line 1603 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1603 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 130 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 131 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[-2].str)) (yyval.expr) = ast->Getter<AST::EvalAST>(std::string((yyvsp[-2].str)),
-                ast->Getter<AST::BinaryExprAST>((yyvsp[-1].type), ast->Getter<AST::VariableExprAST>(std::string(std::string((yyvsp[-2].str)))), (yyvsp[0].expr)));
+                ast->Getter<AST::BinaryExprAST>((yyvsp[-1].type), ast->Getter<AST::VariableExprAST>(std::string((yyvsp[-2].str))), (yyvsp[0].expr)));
             else (yyval.expr) = nullptr; free((yyvsp[-2].str)); }
-#line 1611 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1611 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 135 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 136 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1617 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1617 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 136 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 137 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('&', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1623 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1623 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 137 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 138 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('^', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1629 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1629 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 138 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 139 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('|', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1635 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1635 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 139 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 140 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>('<', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1641 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1641 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 140 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 141 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>(oLEQ, (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1647 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1647 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 141 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 142 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>(oGEQ, (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1653 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1653 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 142 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 143 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>('>', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1659 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1659 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 143 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 144 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>('=', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1665 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1665 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 144 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 145 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>('!', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1671 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1671 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 147 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 148 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1677 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1677 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 148 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 149 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('+', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1683 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1683 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 149 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 150 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('-', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1689 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1689 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 152 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 153 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1695 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1695 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 153 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 154 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('*', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1701 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1701 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 154 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 155 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('/', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1707 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1707 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 155 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 156 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::BinaryExprAST>('%', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1713 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1713 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 156 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 157 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::LogicExprAST>('&', (yyvsp[-2].expr), (yyvsp[0].expr)); }
-#line 1719 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1719 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 159 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 160 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1725 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1725 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 160 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 161 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr);}
-#line 1731 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1731 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 161 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 162 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::UnaryAST>('~', (yyvsp[0].expr)); }
-#line 1737 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1737 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 162 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 163 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::UnaryAST>('-', (yyvsp[0].expr)); }
-#line 1743 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1743 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 163 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 164 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::UnaryAST>('!', (yyvsp[0].expr)); }
-#line 1749 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1749 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 164 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 165 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { reinterpret_cast<AST::VariableExprAST*>((yyvsp[0].expr))->setAddr(); (yyval.expr) = (yyvsp[0].expr); }
-#line 1755 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1755 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 165 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 166 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { reinterpret_cast<AST::VariableExprAST*>((yyvsp[-1].expr))->setAddr(); (yyval.expr) = ast->Getter<AST::UnaryAST>(oINC,  (yyvsp[-1].expr)); }
-#line 1761 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1761 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 166 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 167 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { reinterpret_cast<AST::VariableExprAST*>((yyvsp[0].expr))->setAddr(); (yyval.expr) = ast->Getter<AST::UnaryAST>(oIINC,  (yyvsp[0].expr)); }
-#line 1767 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1767 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 167 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 168 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { reinterpret_cast<AST::VariableExprAST*>((yyvsp[-1].expr))->setAddr(); (yyval.expr) = ast->Getter<AST::UnaryAST>(oDEC, (yyvsp[-1].expr)); }
-#line 1773 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1773 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 168 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 169 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { reinterpret_cast<AST::VariableExprAST*>((yyvsp[0].expr))->setAddr(); (yyval.expr) = ast->Getter<AST::UnaryAST>(oIDEC, (yyvsp[0].expr)); }
-#line 1779 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1779 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 169 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 170 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1785 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1785 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 172 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 173 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[0].expr); }
-#line 1791 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1791 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 173 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 174 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if ((yyvsp[0].str)) (yyval.expr) = ast->Getter<AST::VariableExprAST>(std::string((yyvsp[0].str))); else (yyval.expr) = nullptr; free((yyvsp[0].str)); }
-#line 1797 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1797 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 176 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 177 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if (hash_table->LookupEntry((yyvsp[0].str)) != nullptr) { (yyval.str) = (yyvsp[0].str); } else { yyerror("Var not declaration", (yyvsp[0].str)); (yyval.str) = nullptr; free((yyvsp[0].str)); } }
-#line 1803 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1803 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 179 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 180 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { if (hash_table->LookupEntryNotRecur((yyvsp[0].str)) == nullptr) { (yyval.str) = (yyvsp[0].str); } else { yyerror("Var already has definition", (yyvsp[0].str)); (yyval.str) = nullptr; free((yyvsp[0].str)); } }
-#line 1809 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1809 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 182 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1646  */
+#line 183 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1646  */
     { (yyval.expr) = ast->Getter<AST::IntNumberExprAST>(atoi((yyvsp[0].str))); free((yyvsp[0].str)); }
-#line 1815 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1815 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1819 "/home/direnol/CLionProjects/Compile/src/parser.cpp" /* yacc.c:1646  */
+#line 1819 "/home/direnol/CLionProjects/EasyCompile/src/parser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2043,7 +2043,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 184 "/home/direnol/CLionProjects/Compile/codeGen/bison/bison.y" /* yacc.c:1906  */
+#line 185 "/home/direnol/CLionProjects/EasyCompile/codeGen/bison.y" /* yacc.c:1906  */
 
 
 void yyerror(const char *errmsg)
