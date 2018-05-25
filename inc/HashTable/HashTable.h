@@ -11,6 +11,8 @@
 #include <utility>
 #include "HashEntry.h"
 
+#define debug 0
+
 class Table {
     friend Ast;
 private:

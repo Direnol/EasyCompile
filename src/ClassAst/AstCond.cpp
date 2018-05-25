@@ -95,6 +95,7 @@ void AST::ElseAST::Dfs()
     hashTable->getChlidScope();
     this->Body->Dfs();
     write_adapter->Print("\t#Else end\n");
+    hashTable->popScope();
 }
 
 AST::ElseAST::~ElseAST()

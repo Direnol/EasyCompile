@@ -3,6 +3,8 @@ function void printf;
 function void puts;
 if (0 < 0) {
     puts("test1");
+} else {
+    puts("lol");
 }
 if (0 <= 0) {
     puts("test2");

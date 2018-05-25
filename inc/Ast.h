@@ -13,8 +13,6 @@
 #include "AstSub/AstVar.h"
 
 namespace AST {
-
-
     class Ast {
         BaseAST *tree;
     public:

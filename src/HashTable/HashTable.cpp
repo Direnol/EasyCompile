@@ -72,6 +72,7 @@ void HashTable::getChlidScope()
 #endif
     if (!table) {
         std::cerr << "HashTable is Null" << std::endl;
+        return;
     }
     Table *tmp_table = this->table->getChlidScope();
     if (!tmp_table) {
