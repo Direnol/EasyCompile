@@ -83,7 +83,7 @@ void AST::LoopAST::Dfs()
     this->asmVars->DecStack(INT_SIZE);
 
     this->Body->Dfs();
-    this->Inc->Dfs();
+    if (Inc) this->Inc->Dfs();
 
     this->write_adapter->Print("\tjmp " + start_loop + "\n");
     this->write_adapter->Print(end_loop + ":\n");

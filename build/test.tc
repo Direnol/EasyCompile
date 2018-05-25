@@ -1,32 +1,6 @@
 function void scanf;
 function void printf;
 function void puts;
-if (0 < 0) {
-    puts("test1");
-} else {
-    puts("lol");
-}
-if (0 <= 0) {
-    puts("test2");
-}
-if (0 > 0) {
-    puts("test3");
-}
-if (0 >= 0) {
-    puts("test4");
-}
-if (0 == 0) {
-    puts("test5");
-}
-if (0 != 0) {
-    puts("test6");
-}
-for (int i = 0; i < 10; ++i) {
-    int a = i;
-    a *= i;
-    printf("%d ", a);
-}
-if (10 > 0) {
-    int i = 3;
-    puts("lol");
-}
+int b;
+int a[10];
+printf("%d", &a);

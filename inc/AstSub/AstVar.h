@@ -57,6 +57,22 @@ namespace AST {
 
     };
 
+    class VariableArrAST : public BaseAST {
+        std::string Name;
+        BaseAST *shift;
+    public:
+        explicit VariableArrAST(std::string name, BaseAST *shift)
+                : Name(std::move(name)), shift(shift)
+        {}
+
+        ~VariableArrAST() override;
+
+        std::string Generate_code() final;
+
+        void Dfs() final;
+
+    };
+
     class VariableUndefAST : public BaseAST {
     protected:
         int Type;
@@ -81,6 +97,22 @@ namespace AST {
         {}
 
         ~VariableDefAST() override;
+
+        std::string Generate_code() final;
+
+        void Dfs() final;
+    };
+
+    class ArrDefAST : public BaseAST {
+        int type;
+        std::string name;
+        BaseAST *Expr;
+    public:
+        ArrDefAST(int type, std::string name, BaseAST *expr)
+                : type(type), name(name), Expr(expr)
+        {}
+
+        ~ArrDefAST() override;
 
         std::string Generate_code() final;
 

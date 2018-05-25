@@ -45,6 +45,7 @@ void AST::IntNumberExprAST::Dfs()
     write_adapter->Print("\t#Constant int start\n");
 //    std::cout << ' ' << this->Val << ' ';
     this->write_adapter->Print(this->Generate_code());
+    this->asmVars->setAddrResult(this->Val);
     write_adapter->Print("\t#Constant int end\n");
 }
 
@@ -106,4 +107,50 @@ AST::VariableDefAST::~VariableDefAST()
         delete (this->Expr);
         this->Expr = nullptr;
     }
+}
+
+std::string AST::VariableArrAST::Generate_code()
+{
+    return std::__cxx11::string();
+}
+
+void AST::VariableArrAST::Dfs()
+{
+    this->shift->Dfs();
+    write_adapter->Print(Generate_code());
+}
+
+AST::VariableArrAST::~VariableArrAST()
+{
+    delete shift;
+    shift = nullptr;
+}
+
+AST::ArrDefAST::~ArrDefAST()
+{
+    delete Expr;
+    Expr = nullptr;
+}
+
+std::string AST::ArrDefAST::Generate_code()
+{
+    int ret = asmVars->getAddrResult();
+    int size = INT_SIZE * ret;
+    this->asmVars->IncStack(size);
+    this->asmVars->DecStack(INT_SIZE);
+    int pos = this->asmVars->getStack();
+    this->hashTable->setAddr(this->name, pos);
+    std::string str = "\tpopl %eax\n"
+                      "\tsubl $" + std::to_string(size) + ", %esp\n";
+    str += "\tleal -" + std::to_string(pos) + "(%ebp), %eax\n";
+    str += "\tmovl %eax, -" + std::to_string(pos) + "(%ebp)\n";
+    return str;
+}
+
+void AST::ArrDefAST::Dfs()
+{
+    write_adapter->Print("\t#Array " + this->name + " start\n");
+    this->Expr->Dfs();
+    write_adapter->Print(Generate_code());
+    write_adapter->Print("\t#Array " + this->name + " end\n");
 }

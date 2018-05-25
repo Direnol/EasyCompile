@@ -9,149 +9,66 @@
     void comment(char end);
 %}
 
-DIGIT[0-9]
-LETTER[a-zA-Z]
-DELIM[();{},:]
-WS[ \t]
+DIGIT [0-9]
+LETTER [a-zA-Z]
+DELIM [\[\]();{},]
+WS [ \t]
 ID ("_"|{LETTER})("_"|{LETTER}|{DIGIT})*
 OP [-+*/|%&]
-LOP [<>=!~]
+LOP [<>=!~:]
 SIGN [-+]
 
 %%
 
-\/(\*|\/) {
-   comment(yytext[1]);
-    ch += yyleng;
-}
+\/(\*|\/) { ch += yyleng; comment(yytext[1]); }
 
+\".*\" { ch += yyleng; yylval.str = strdup(yytext); return STRING; }
 
-\".*\" {
-    ch += yyleng;
-    yylval.str = strdup(yytext);
-    return STRING;
-}
+"\n" { ch = 1; }
 
-"\n" {
-    ch = 1;
-}
+{WS}+ { ch += yyleng; }
 
-{OP}"=" {
-    ch += yyleng;
-    yylval.type = *yytext;
-    return OPME;
-}
+{OP}"=" { ch += yyleng; yylval.type = *yytext; return OPME; }
 
+"++" { ch += yyleng; return INC; }
 
-"++" {
-    ch += yyleng;
-    return INC;
-}
+"--" { ch += yyleng; return DEC; }
 
-"--" {
-    ch += yyleng;
-    return DEC;
-}
+"==" { ch += yyleng; return EQ; }
 
-"==" {
-    ch += yyleng;
-    return EQ;
-}
+"!=" { ch += yyleng; return NEQ; }
 
-"!=" {
-    ch += yyleng;
-    return NEQ;
-}
+"&&" { ch += yyleng; return AND; }
 
-"&&" {
-    ch += yyleng;
-    return AND;
-}
+">=" { ch += yyleng; return GEQ; }
 
+"<=" { ch += yyleng; return LEQ; }
 
-">=" {
-    ch += yyleng;
-    return GEQ;
-}
+"if" { ch += yyleng; return IF; }
 
-"<=" {
-    ch += yyleng;
-    return LEQ;
-}
+"else" { ch += yyleng; return ELSE; }
 
-"if" {
-    ch += yyleng;
-    return IF;
-}
+"for" { ch += yyleng; return FOR; }
 
-"else" {
-    ch += yyleng;
-    return ELSE;
-}
+"function" { ch += yyleng; return FUNCTION; }
 
-"for" {
-    ch += yyleng;
-    return FOR;
-}
+"int" { ch += yyleng; yylval.type = INT; return INT; }
 
-"function" {
-    ch += yyleng;
-    return FUNCTION;
+"void" { ch += yyleng; yylval.type = VOID; return VOID; }
 
-}
+"goto" { ch += yyleng; return JUMP; }
 
-"int" {
-    ch += yyleng;
-    yylval.type = INT;
-    return INT;
-}
+"return" { ch += yyleng; return RETURN; }
 
-"void" {
-    ch += yyleng;
-    yylval.type = VOID;
-    return VOID;
-}
+{SIGN}?{DIGIT}+ { ch += yyleng; yylval.str = strdup(yytext); return CONST_INT; }
 
-"goto" {
-    ch += yyleng;
-    return JUMP;
-}
+{ID} { yylval.str = strdup(yytext); ch += yyleng; return ID; }
 
-"return" {
-    ch += yyleng;
-    return RETURN;
- }
+{DELIM} { ch += yyleng; return *yytext; }
 
-{SIGN}?{DIGIT}+ {
-    ch += yyleng;
-    yylval.str = strdup(yytext);
-    return CONST_INT;
-}
+{OP} { ch += yyleng; return *yytext; }
 
-{ID} {
-    yylval.str = strdup(yytext);
-    ch += yyleng;
-    return ID;
-}
-
-{DELIM} {
-    ch += yyleng;
-    return *yytext;
-}
-
-{WS}+ {
-    ch += yyleng;
-}
-
-{OP} {
-    ch += yyleng;
-    return *yytext;
-}
-
-{LOP} {
-    ch += yyleng;
-    return *yytext;
-}
+{LOP} { ch += yyleng; return *yytext; }
 
 . {
     printf("Unknown character (%d, %d): %s\n", yylineno, ch, yytext);
