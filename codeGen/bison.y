@@ -1,7 +1,7 @@
 %{
     #include "../inc/Ast.h"
     #include "../inc/asm/Asm.h"
-    #include "../inc/asm/ASM_VARS.h"
+    #include "../inc/asm/Asm_vars.h"
     #include "../inc/helpers/Singleton.h"
     #include "../inc/helpers/WriteAdapter.h"
     #include "../inc/helpers/StringGenerator.h"
@@ -30,161 +30,170 @@
     int type;
     char* str;
     AST::BaseAST* expr;
-    // TODO Fix unary priority
 }
 
-%type <str> ID CONST_INT ID_REC STRING ID_LOC
-%type <type> INT VOID FUNCTION FUNC_T OPME
-%type <expr> EXPR2 EXPR1 EXPR0 EXPR CONST DEFVAR UNDEFVAR VAR EVAL
-%type <expr> MARK GOTO ATOM CALL ARGS ARG RET
-%type <expr> ANYVAR LOOP ATOMLLIST IFELSE ELSEIF BODY
-%type <expr> PROTO LEVAL OPERS VARA
+%type <str> ID CONST_INT id_rec STRING id_loc
+%type <type> INT VOID FUNCTION func_type OPME
+%type <expr> expr2 expr1 expr0 expr const defvar undefvar var eval
+%type <expr> mark goto atom call args arg ret
+%type <expr> anyvar loop atomlist condition else body
+%type <expr> prototype loop_inc operatos var_only
 
+%start start
 %%
 
-START:  ATOM { ast->AddToLink($1); }
-        | START ATOM { ast->AddToLink($2); }
+start: body { ast->AddToLink($1); }
         ;
 
-BODY:    ATOMLLIST { $$ = ast->Getter<AST::BodyAST>($1); }
+body:   atomlist { $$ = ast->Getter<AST::BodyAST>($1); }
         ;
 
-
-ATOMLLIST:   ATOM { $$ = ast->Getter<AST::BodyLListAST>(nullptr, $1); }
-            | ATOM BODY { $$ = ast->Getter<AST::BodyLListAST>($2, $1); }
+atomlist:   atom { $$ = ast->Getter<AST::BodyLListAST>(nullptr, $1); }
+            | atom body { $$ = ast->Getter<AST::BodyLListAST>($2, $1); }
             ;
 
-ATOM:   DEFVAR ';' { $$ = $1; }
-        | UNDEFVAR ';' { $$ = $1; }
-        | GOTO ';' { $$ = $1; }
-        | MARK { $$ = $1; }
-        | OPERS { $$ = $1; }
-        | EVAL ';' { $$ = $1; }
-        | CALL ';' { $$ = $1; }
-        | RET ';' { $$ = $1; }
-        | PROTO ';' { $$ = $1; }
-        | EXPR ';' { $$ = $1; }
+atom:   defvar ';' { $$ = $1; }
+        | undefvar ';' { $$ = $1; }
+        | goto ';' { $$ = $1; }
+        | mark { $$ = $1; }
+        | operatos { $$ = $1; hash_table->closeScope(); }
+        | eval ';' { $$ = $1; }
+        | call ';' { $$ = $1; }
+        | ret ';' { $$ = $1; }
+        | prototype ';' { $$ = $1; }
+        | expr ';' { $$ = $1; }
         ;
 
-PROTO:  FUNCTION FUNC_T ID_LOC { if ($3) { hash_table->CreateEntry($2, std::string($3)); $$ = ast->Getter<AST::PrototypeFuncAST>($2, std::string($3)); } else $$ = nullptr; free($3); }
+prototype:  FUNCTION func_type id_loc { if ($3) { hash_table->CreateEntry($2, std::string($3));
+                                $$ = ast->Getter<AST::PrototypeFuncAST>($2, std::string($3)); }
+                            else $$ = nullptr; free($3); }
         ;
 
-FUNC_T: INT { $$ = $1; }
+func_type: INT { $$ = $1; }
         | VOID { $$ = $1; }
         ;
 
-RET:    RETURN VAR  { $$ = ast->Getter<AST::ReturnAST>($2); }
+ret:    RETURN var  { $$ = ast->Getter<AST::ReturnAST>($2); }
         ;
 
-CALL:   ID_REC  '(' ARGS ')' { if ($1) $$ = ast->Getter<AST::CallFuncAST>(std::string($1), ast->Getter<AST::ArgsAST>($3)); else $$ = nullptr; free($1); }
+call:   id_rec  '(' args ')' { if ($1) $$ = ast->Getter<AST::CallFuncAST>(std::string($1), ast->Getter<AST::ArgsAST>($3)); else $$ = nullptr; free($1); }
         ;
 
-ARGS:   ARG { $$ = ast->Getter<AST::ArgListAST>(nullptr, $1); }
-        | ARG ',' ARGS { $$ = ast->Getter<AST::ArgListAST>($3, $1); }
+args:   arg { $$ = ast->Getter<AST::ArgListAST>(nullptr, $1); }
+        | arg ',' args { $$ = ast->Getter<AST::ArgListAST>($3, $1); }
         ;
 
-ARG: EXPR { $$ = $1; }
+arg: expr { $$ = $1; }
         | STRING {      std::string str_name = Singleton<StringGenerator>::getInstance()->Generate();
                         Singleton<FormatAcum>::getInstance()->Add(str_name, std::string($1));
                         $$ = ast->Getter<AST::StringAST>(str_name, std::string($1));
                         free($1);
                  }
-        | EVAL { ($1)->setNeed(); $$ = $1; }
+        | eval { ($1)->setNeed(); $$ = $1; }
         ;
 
-DEFVAR: INT ID_LOC '=' EXPR  { if ($2) { hash_table->CreateEntry($1, std::string($2)); $$ = ast->Getter<AST::VariableDefAST>($1, std::string($2), $4); } else $$ = nullptr; free($2); }
+defvar: INT id_loc '=' expr  { if ($2) { hash_table->CreateEntry($1, std::string($2)); $$ = ast->Getter<AST::VariableDefAST>($1, std::string($2), $4); } else $$ = nullptr; free($2); }
         ;
 
-UNDEFVAR: INT ID_LOC  { if ($2) { hash_table->CreateEntry($1, std::string($2)); $$ = ast->Getter<AST::VariableUndefAST>($1, std::string($2)); } else $$ = nullptr; free($2); }
+undefvar: INT id_loc  { if ($2) { hash_table->CreateEntry($1, std::string($2)); $$ = ast->Getter<AST::VariableUndefAST>($1, std::string($2)); } else $$ = nullptr; free($2); }
         ;
 
-ANYVAR: DEFVAR { $$ = $1; }
-        | EVAL { $$ = $1; }
+anyvar: defvar { $$ = $1; }
+        | eval { $$ = $1; }
         | ';' { $$ = nullptr; }
         ;
 
-LEVAL:  EVAL { $$ = $1; }
-        | EXPR { $$ = $1; }
+loop_inc:  eval { $$ = $1; }
+        | expr { $$ = $1; }
         ;
 
-MARK:   ID_REC ':' { if ($1) { hash_table->CreateEntry(MARK_TOK, std::string($1)); $$ = ast->Getter<AST::MarkAST>(std::string($1)); } else $$ = nullptr; free($1); }
+mark:   id_rec ':' { if ($1) { hash_table->CreateEntry(MARK_TOK, std::string($1)); $$ = ast->Getter<AST::MarkAST>(std::string($1)); } else $$ = nullptr; free($1); }
         ;
 
-GOTO:   JUMP ID_REC  { if ($2) { $$ = ast->Getter<AST::JumpAST>(std::string($2)); } else { $$ = nullptr; } free($2); }
+goto:   JUMP id_rec  { if ($2) { $$ = ast->Getter<AST::JumpAST>(std::string($2)); } else { $$ = nullptr; } free($2); }
         ;
 
-OPERS:  IFELSE { $$ = $1; }
-        | LOOP { $$ = $1; }
+operatos:  condition { $$ = $1; }
+        | loop { $$ = $1; }
         ;
 
-IFELSE: IF '(' EXPR ')' '{' BODY '}' { $$ = ast->Getter<AST::IfAST>($3, $6, nullptr); }
-        | IF '(' EXPR ')' '{' BODY '}' ELSEIF { $$ = ast->Getter<AST::IfAST>($3, $6, $8); }
+condition: if_start '(' expr ')' '{' body '}' { $$ = ast->Getter<AST::IfAST>($3, $6, nullptr); }
+        | if_start '(' expr ')' '{' body '}' else { $$ = ast->Getter<AST::IfAST>($3, $6, $8); }
         ;
 
-ELSEIF: ELSE '{' BODY '}' { $$ = ast->Getter<AST::ElseAST>($3); }
+if_start:   IF { hash_table->addChildScope(); }
         ;
 
-LOOP:   FOR '(' ANYVAR ';' EXPR ';' LEVAL ')' '{' BODY '}' { $$ = ast->Getter<AST::LoopAST>($3, $5, $7, $10); }
+else:   else_start '{' body '}' { $$ = ast->Getter<AST::ElseAST>($3); }
         ;
 
-EVAL:   ID_REC '=' EXPR   { if ($1) $$ = ast->Getter<AST::EvalAST>($1, $3); else $$ = nullptr; free($1); }
-        | ID_REC OPME EXPR { if ($1) $$ = ast->Getter<AST::EvalAST>(std::string($1),
+else_start: ELSE { hash_table->closeScope(); hash_table->addChildScope(); }
+        ;
+
+loop:   loop_start '(' anyvar ';' expr ';' loop_inc ')' '{' body '}' { $$ = ast->Getter<AST::LoopAST>($3, $5, $7, $10); }
+        ;
+
+loop_start: FOR { hash_table->addChildScope(); }
+        ;
+
+eval:   id_rec '=' expr   { if ($1) $$ = ast->Getter<AST::EvalAST>($1, $3); else $$ = nullptr; free($1); }
+        | id_rec OPME expr { if ($1) $$ = ast->Getter<AST::EvalAST>(std::string($1),
                 ast->Getter<AST::BinaryExprAST>($2, ast->Getter<AST::VariableExprAST>(std::string($1)), $3));
             else $$ = nullptr; free($1); }
         ;
 
-EXPR:   EXPR0 { $$ = $1; }
-        | EXPR0 '&' EXPR { $$ = ast->Getter<AST::BinaryExprAST>('&', $1, $3); }
-        | EXPR0 '^' EXPR { $$ = ast->Getter<AST::BinaryExprAST>('^', $1, $3); }
-        | EXPR0 '|' EXPR { $$ = ast->Getter<AST::BinaryExprAST>('|', $1, $3); }
-        | EXPR0 '<' EXPR { $$ = ast->Getter<AST::LogicExprAST>('<', $1, $3); }
-        | EXPR0 LEQ EXPR { $$ = ast->Getter<AST::LogicExprAST>(oLEQ, $1, $3); }
-        | EXPR0 GEQ EXPR { $$ = ast->Getter<AST::LogicExprAST>(oGEQ, $1, $3); }
-        | EXPR0 '>' EXPR { $$ = ast->Getter<AST::LogicExprAST>('>', $1, $3); }
-        | EXPR0 EQ EXPR { $$ = ast->Getter<AST::LogicExprAST>('=', $1, $3); }
-        | EXPR0 NEQ EXPR { $$ = ast->Getter<AST::LogicExprAST>('!', $1, $3); }
+expr:   expr0 { $$ = $1; }
+        | expr0 '&' expr { $$ = ast->Getter<AST::BinaryExprAST>('&', $1, $3); }
+        | expr0 '^' expr { $$ = ast->Getter<AST::BinaryExprAST>('^', $1, $3); }
+        | expr0 '|' expr { $$ = ast->Getter<AST::BinaryExprAST>('|', $1, $3); }
+        | expr0 '<' expr { $$ = ast->Getter<AST::LogicExprAST>('<', $1, $3); }
+        | expr0 LEQ expr { $$ = ast->Getter<AST::LogicExprAST>(oLEQ, $1, $3); }
+        | expr0 GEQ expr { $$ = ast->Getter<AST::LogicExprAST>(oGEQ, $1, $3); }
+        | expr0 '>' expr { $$ = ast->Getter<AST::LogicExprAST>('>', $1, $3); }
+        | expr0 EQ expr { $$ = ast->Getter<AST::LogicExprAST>('=', $1, $3); }
+        | expr0 NEQ expr { $$ = ast->Getter<AST::LogicExprAST>('!', $1, $3); }
         ;
 
-EXPR0:   EXPR1 { $$ = $1; }
-        | EXPR1 '+' EXPR0 { $$ = ast->Getter<AST::BinaryExprAST>('+', $1, $3); }
-        | EXPR1 '-' EXPR0 { $$ = ast->Getter<AST::BinaryExprAST>('-', $1, $3); }
+expr0:   expr1 { $$ = $1; }
+        | expr1 '+' expr0 { $$ = ast->Getter<AST::BinaryExprAST>('+', $1, $3); }
+        | expr1 '-' expr0 { $$ = ast->Getter<AST::BinaryExprAST>('-', $1, $3); }
         ;
 
-EXPR1:  EXPR2 { $$ = $1; }
-        | EXPR2 '*' EXPR1 { $$ = ast->Getter<AST::BinaryExprAST>('*', $1, $3); }
-        | EXPR2 '/' EXPR1 { $$ = ast->Getter<AST::BinaryExprAST>('/', $1, $3); }
-        | EXPR2 '%' EXPR1 { $$ = ast->Getter<AST::BinaryExprAST>('%', $1, $3); }
-        | EXPR2 AND EXPR1 { $$ = ast->Getter<AST::LogicExprAST>('&', $1, $3); }
+expr1:  expr2 { $$ = $1; }
+        | expr2 '*' expr1 { $$ = ast->Getter<AST::BinaryExprAST>('*', $1, $3); }
+        | expr2 '/' expr1 { $$ = ast->Getter<AST::BinaryExprAST>('/', $1, $3); }
+        | expr2 '%' expr1 { $$ = ast->Getter<AST::BinaryExprAST>('%', $1, $3); }
+        | expr2 AND expr1 { $$ = ast->Getter<AST::LogicExprAST>('&', $1, $3); }
         ;
 
-EXPR2:  VAR { $$ = $1; }
-        | '(' EXPR ')' { $$ = $2;}
-        | '~' EXPR2 { $$ = ast->Getter<AST::UnaryAST>('~', $2); }
-        | '-' EXPR2 { $$ = ast->Getter<AST::UnaryAST>('-', $2); }
-        | '!' EXPR2  { $$ = ast->Getter<AST::UnaryAST>('!', $2); }
-        | '*' EXPR2  { $$ = ast->Getter<AST::UnaryAST>('*', $2); }
-        | '&' VARA  { ($2)->setNeed(); $$ = $2; }
-        | VARA INC { ($1)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oINC,  $1); }
-        | INC VARA { ($2)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oIINC,  $2); }
-        | VARA  DEC { ($1)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oDEC, $1); }
-        | DEC VARA  { ($2)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oIDEC, $2); }
-        | CALL { $$ = $1; }
+expr2:  var { $$ = $1; }
+        | '(' expr ')' { $$ = $2;}
+        | '~' expr2 { $$ = ast->Getter<AST::UnaryAST>('~', $2); }
+        | '-' expr2 { $$ = ast->Getter<AST::UnaryAST>('-', $2); }
+        | '!' expr2  { $$ = ast->Getter<AST::UnaryAST>('!', $2); }
+        | '*' expr2  { $$ = ast->Getter<AST::UnaryAST>('*', $2); }
+        | '&' var_only  { ($2)->setNeed(); $$ = $2; }
+        | var_only INC { ($1)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oINC,  $1); }
+        | INC var_only { ($2)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oIINC,  $2); }
+        | var_only  DEC { ($1)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oDEC, $1); }
+        | DEC var_only  { ($2)->setNeed(); $$ = ast->Getter<AST::UnaryAST>(oIDEC, $2); }
+        | call { $$ = $1; }
         ;
 
-VARA:   ID_REC { if ($1) $$ = ast->Getter<AST::VariableExprAST>(std::string($1)); else $$ = nullptr; free($1); }
+var_only:   id_rec { if ($1) $$ = ast->Getter<AST::VariableExprAST>(std::string($1)); else $$ = nullptr; free($1); }
         ;
 
-VAR:    CONST { $$ = $1; }
-        | ID_REC { if ($1) $$ = ast->Getter<AST::VariableExprAST>(std::string($1)); else $$ = nullptr; free($1); }
+var:    const { $$ = $1; }
+        | id_rec { if ($1) $$ = ast->Getter<AST::VariableExprAST>(std::string($1)); else $$ = nullptr; free($1); }
         ;
 
-ID_REC: ID { if (hash_table->LookupEntry($1) != nullptr) { $$ = $1; } else { yyerror("Var not declaration", $1); $$ = nullptr; free($1); } }
+id_rec: ID { if (hash_table->LookupEntry($1) != nullptr) { $$ = $1; } else { yyerror("Var not declaration", $1); $$ = nullptr; free($1); } }
         ;
 
-ID_LOC: ID { if (hash_table->LookupEntryNotRecur($1) == nullptr) { $$ = $1; } else { yyerror("Var already has definition", $1); $$ = nullptr; free($1); } }
+id_loc: ID { if (hash_table->LookupEntryNotRecur($1) == nullptr) { $$ = $1; } else { yyerror("Var already has definition", $1); $$ = nullptr; free($1); } }
         ;
 
-CONST:  CONST_INT { $$ = ast->Getter<AST::IntNumberExprAST>(atoi($1)); free($1); }
+const:  CONST_INT { $$ = ast->Getter<AST::IntNumberExprAST>(atoi($1)); free($1); }
         ;
 %%
 

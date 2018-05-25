@@ -80,9 +80,8 @@ union YYSTYPE
     int type;
     char* str;
     AST::BaseAST* expr;
-    // TODO Fix unary priority
 
-#line 86 "/home/direnol/CLionProjects/EasyCompile/inc/parser.h" /* yacc.c:1909  */
+#line 85 "/home/direnol/CLionProjects/EasyCompile/inc/parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

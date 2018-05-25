@@ -2,7 +2,7 @@
 // Created by evgenii on 20.05.18.
 //
 
-#include "../../inc/asm/ASM_VARS.h"
+#include "../../inc/asm/Asm_vars.h"
 
 void AsmVars::setIntType(size_t var)
 {

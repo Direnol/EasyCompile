@@ -1,32 +1,30 @@
 function void scanf;
 function void printf;
-
-int fact = 33;
-
-if (fact > 0) {
-    fact += 3;
+function void puts;
+if (0 < 0) {
+    puts("test1");
 }
-if (fact == 0) {
-    fact -= 3;
+if (0 <= 0) {
+    puts("test2");
 }
-/*
-scanf("%d", &st);
-st++; // += 1;
-if (st <= 0) {
-printf("Err\n");
-return st;
+if (0 > 0) {
+    puts("test3");
 }
-
-if (st == 1) {
-printf("n! = 1");
-st += 2;
-return st;
+if (0 >= 0) {
+    puts("test4");
 }
-
-fact = st;
-
-for(int i = st - 1; i > 1; i--) {
-fact = fact * i;
+if (0 == 0) {
+    puts("test5");
 }
-
-printf("Fact: %d", fact);*/
+if (0 != 0) {
+    puts("test6");
+}
+for (int i = 0; i < 10; ++i) {
+    int a = i;
+    a *= i;
+    printf("%d ", a);
+}
+if (10 > 0) {
+    int i = 3;
+    puts("lol");
+}
